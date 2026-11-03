@@ -21,6 +21,7 @@ resource "aws_ecr_repository" "this" {
   tags = merge(var.tags, {
     Name = var.name
   })
+  force_delete = true
 }
 
 # Keep only the 10 most recent images so storage cost stays near zero.
