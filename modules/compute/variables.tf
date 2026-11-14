@@ -83,3 +83,17 @@ variable "tags" {
   type        = map(string)
   default     = {}
 }
+variable "db_host" {
+  description = "Database hostname the app connects to."
+  type        = string
+}
+
+variable "db_name" {
+  description = "Database name inside the RDS instance."
+  type        = string
+}
+
+variable "db_secret_arn" {
+  description = "Secrets Manager ARN the app reads its database password from at runtime."
+  type        = string
+}

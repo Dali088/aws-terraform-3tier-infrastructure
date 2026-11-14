@@ -101,10 +101,13 @@ resource "aws_launch_template" "app" {
 
   # The script runs at boot. base64encode is required by the launch template API.
   user_data = base64encode(templatefile("${path.module}/user_data.sh.tpl", {
-    region   = var.aws_region
-    registry = var.ecr_registry
-    image    = var.image_uri
-    app_port = var.app_port
+    region        = var.aws_region
+    registry      = var.ecr_registry
+    image         = var.image_uri
+    app_port      = var.app_port
+    db_host       = var.db_host
+    db_name       = var.db_name
+    db_secret_arn = var.db_secret_arn
   }))
 
   tag_specifications {

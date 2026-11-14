@@ -13,6 +13,10 @@ module "compute" {
   ecr_registry = split("/", module.ecr.repository_url)[0]
   image_uri    = "${module.ecr.repository_url}:v0.1.0"
 
+  db_host       = module.database.endpoint
+  db_name       = module.database.db_name
+  db_secret_arn = module.database.master_user_secret_arn
+
   tags = {
     Project     = var.project_name
     Environment = var.environment
