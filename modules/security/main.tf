@@ -108,6 +108,12 @@ data "aws_iam_policy_document" "app_permissions" {
     ]
     resources = [var.ecr_repository_arn]
   }
+  # Read the one database secret, nothing else in Secrets Manager.
+  statement {
+    sid       = "ReadDbSecret"
+    actions   = ["secretsmanager:GetSecretValue"]
+    resources = [var.db_secret_arn]
+  }
 }
 
 resource "aws_iam_role_policy" "app" {

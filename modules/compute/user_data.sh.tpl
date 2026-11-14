@@ -14,4 +14,9 @@ aws ecr get-login-password --region "${region}" | docker login --username AWS --
 docker pull "${image}"
 
 # --restart unless-stopped restarts the app after a crash or a reboot.
-docker run -d --name app --restart unless-stopped -p "${app_port}:8080" "${image}"
+docker run -d --name app --restart unless-stopped -p "${app_port}:8080" \
+  -e DB_HOST="${db_host}" \
+  -e DB_NAME="${db_name}" \
+  -e DB_SECRET_ARN="${db_secret_arn}" \
+  -e AWS_REGION="${region}" \
+  "${image}"

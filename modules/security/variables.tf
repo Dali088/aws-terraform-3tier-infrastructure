@@ -24,3 +24,8 @@ variable "tags" {
   type        = map(string)
   default     = {}
 }
+
+variable "db_secret_arn" {
+  description = "ARN of the database master password secret. Instances may read this one secret only."
+  type        = string
+}
