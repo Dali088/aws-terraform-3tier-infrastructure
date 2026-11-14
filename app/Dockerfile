@@ -1,6 +1,6 @@
 # Small official Python base image. "slim" leaves out extras the app doesn't need,
 # which means fewer packages to patch and a smaller attack surface.
-FROM python:3.12-slim
+FROM python:3.14-slim
 
 # Work inside /app in the container, not in the root directory.
 WORKDIR /app
