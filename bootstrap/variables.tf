@@ -9,3 +9,9 @@ variable "project_name" {
   type        = string
   default     = "aws-terraform-3tier"
 }
+
+variable "github_repo" {
+  description = "GitHub repository allowed to assume the CI roles, in owner/name form."
+  type        = string
+  default     = "Dali088/aws-terraform-3tier-infrastructure"
+}
