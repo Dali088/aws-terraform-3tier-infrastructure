@@ -1,0 +1,47 @@
+name: Terraform plan
+
+# Runs on every pull request that touches Terraform, module, or app files.
+on:
+  pull_request:
+    paths:
+      - "environments/**"
+      - "modules/**"
+      - "bootstrap/**"
+
+# Read-only token for the workflow. Only the OIDC step needs id-token.
+permissions:
+  contents: read
+  id-token: write
+  pull-requests: write
+
+jobs:
+  plan:
+    name: fmt, validate, plan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.16.5"
+
+      - name: Check formatting
+        run: terraform fmt -check -recursive
+
+      - name: Authenticate to AWS with OIDC
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_PLAN_ROLE_ARN }}
+          aws-region: eu-west-1
+
+      - name: Init
+        working-directory: environments/dev
+        run: terraform init -input=false
+
+      - name: Validate
+        working-directory: environments/dev
+        run: terraform validate
+
+      - name: Plan
+        working-directory: environments/dev
+        run: terraform plan -input=false -no-color
