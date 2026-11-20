@@ -8,3 +8,5 @@ terraform {
     }
   }
 }
+
+# Plan workflow trigger: this comment exists only to start the CI check.
